@@ -1,0 +1,203 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Registro LHY - League of Legends</title>
+    <style>
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background-color: #1a1a2e;
+            color: #ffffff;
+            margin: 0;
+            padding: 20px;
+        }
+        .container {
+            max-width: 600px;
+            margin: 0 auto;
+            background-color: #16213e;
+            padding: 20px;
+            border-radius: 10px;
+            box-shadow: 0 0 15px rgba(0, 0, 0, 0.5);
+        }
+        h1 {
+            text-align: center;
+            color: #e94560;
+        }
+        .form-group {
+            margin-bottom: 15px;
+        }
+        label {
+            display: block;
+            margin-bottom: 5px;
+            font-weight: bold;
+        }
+        input, select, textarea {
+            width: 100%;
+            padding: 10px;
+            border: 1px solid #0f3460;
+            border-radius: 5px;
+            background-color: #0f3460;
+            color: #ffffff;
+        }
+        input:focus, select:focus, textarea:focus {
+            outline: none;
+            border-color: #e94560;
+        }
+        button {
+            background-color: #e94560;
+            color: white;
+            border: none;
+            padding: 10px 20px;
+            border-radius: 5px;
+            cursor: pointer;
+            font-weight: bold;
+            width: 100%;
+            margin-top: 10px;
+        }
+        button:hover {
+            background-color: #d23354;
+        }
+        .required:after {
+            content: " *";
+            color: #e94560;
+        }
+        #mensaje-enviado {
+            display: none;
+            text-align: center;
+            color: #4CAF50;
+            font-size: 18px;
+            font-weight: bold;
+            padding: 20px;
+            background-color: #0f3460;
+            border-radius: 5px;
+            margin-top: 20px;
+        }
+        #mensaje-enviado p {
+            margin: 0;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1>¡Únete a LHY!</h1>
+        <p>Regístrate para ser parte de nuestro grupo de League of Legends.</p>
+        
+        <form id="formulario-lhy">
+            <!-- Datos Personales -->
+            <div class="form-group">
+                <label for="nombre" class="required">Nombre completo</label>
+                <input type="text" id="nombre" name="nombre" required>
+            </div>
+            
+            <div class="form-group">
+                <label for="edad" class="required">Edad</label>
+                <input type="number" id="edad" name="edad" min="13" required>
+            </div>
+            
+            <div class="form-group">
+                <label for="email" class="required">Correo electrónico</label>
+                <input type="email" id="email" name="email" required>
+            </div>
+            
+            <!-- Datos de League of Legends -->
+            <div class="form-group">
+                <label for="summoner" class="required">Nombre de Invocador</label>
+                <input type="text" id="summoner" name="summoner" required>
+            </div>
+            
+            <div class="form-group">
+                <label for="region" class="required">Región</label>
+                <select id="region" name="region" required>
+                    <option value="" disabled selected>Selecciona tu región</option>
+                    <option value="LAS">LAS (Latinoamérica Sur)</option>
+                    <option value="LAN">LAN (Latinoamérica Norte)</option>
+                    <option value="NA">NA (Norteamérica)</option>
+                    <option value="EUW">EUW (Europa Oeste)</option>
+                </select>
+            </div>
+            
+            <div class="form-group">
+                <label for="rol" class="required">Rol principal</label>
+                <select id="rol" name="rol" required>
+                    <option value="" disabled selected>Selecciona tu rol</option>
+                    <option value="Top">Top</option>
+                    <option value="Jungla">Jungla</option>
+                    <option value="Mid">Mid</option>
+                    <option value="ADC">ADC</option>
+                    <option value="Support">Support</option>
+                </select>
+            </div>
+            
+            <div class="form-group">
+                <label for="rango">Rango actual (opcional)</label>
+                <select id="rango" name="rango">
+                    <option value="" selected>No especificado</option>
+                    <option value="Hierro">Hierro</option>
+                    <option value="Bronce">Bronce</option>
+                    <option value="Plata">Plata</option>
+                    <option value="Oro">Oro</option>
+                    <option value="Platino">Platino</option>
+                </select>
+            </div>
+            
+            <div class="form-group">
+                <label for="horario">Horarios disponibles para jugar</label>
+                <input type="text" id="horario" name="horario" placeholder="Ej: Tardes de 6 PM a 10 PM">
+            </div>
+            
+            <div class="form-group">
+                <label for="discord">Usuario de Discord (opcional)</label>
+                <input type="text" id="discord" name="discord" placeholder="Ej: Usuario#1234">
+            </div>
+            
+            <div class="form-group">
+                <label for="comentarios">¿Por qué quieres unirte a LHY?</label>
+                <textarea id="comentarios" name="comentarios" rows="3"></textarea>
+            </div>
+            
+            <button type="button" onclick="enviarFormulario()">Enviar Solicitud</button>
+        </form>
+        
+        <div id="mensaje-enviado">
+            <p>✅ ¡Registro enviado con éxito!</p>
+            <p>Revisaremos tu solicitud y te contactaremos pronto.</p>
+        </div>
+    </div>
+
+    <script>
+        function enviarFormulario() {
+            const formulario = document.getElementById('formulario-lhy');
+            const mensaje = document.getElementById('mensaje-enviado');
+            
+            // Validar campos obligatorios
+            const camposRequeridos = document.querySelectorAll('[required]');
+            let valido = true;
+            
+            camposRequeridos.forEach(campo => {
+                if (!campo.value) {
+                    valido = false;
+                    campo.style.borderColor = '#e94560';
+                } else {
+                    campo.style.borderColor = '#0f3460';
+                }
+            });
+            
+            if (valido) {
+                formulario.style.display = 'none';
+                mensaje.style.display = 'block';
+                
+                // Opcional: Mostrar datos en consola (solo para prueba)
+                console.log('Datos enviados:', {
+                    nombre: document.getElementById('nombre').value,
+                    summoner: document.getElementById('summoner').value,
+                    region: document.getElementById('region').value
+                    // Agrega más campos si necesitas debug
+                });
+            } else {
+                alert('Por favor, completa los campos obligatorios (*)');
+            }
+        }
+    </script>
+</body>
+</html>
